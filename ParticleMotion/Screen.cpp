@@ -37,7 +37,7 @@ bool Screen::init()
 
 	m_buffer = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
 
-	memset(m_buffer, 0x00, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+	this->clear();
 
 	return true;
 }
@@ -63,7 +63,7 @@ void Screen::update()
 
 void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue)
 {
-	if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y > SCREEN_HEIGHT)
+	if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT)
 		return;
 
 	Uint32 color = 0;
@@ -86,5 +86,9 @@ void Screen::close()
 	SDL_DestroyTexture(m_texture);
 	SDL_DestroyWindow(m_window);
 	SDL_Quit();
+}
+void Screen::clear()
+{
+	memset(m_buffer, 0x00, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
 }
 }
