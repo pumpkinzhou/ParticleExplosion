@@ -1,77 +1,45 @@
 // ParticleMotion.cpp : This file contains the 'main' function. Program execution begins and ends there.
 #pragma comment(lib, "sdl2.lib")
-#include <iostream>
-#include <SDL.h>
+#include "Screen.h"
+#include <math.h>
+
 using namespace std;
+using namespace SDLScreen;
 
 
 int main(int argc, char* argv[])
 {
-	const int SCREEN_WIDTH = 800;
-	const int SCREEN_HEIGHT = 600;
-
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		cout << "SDL init failed." << endl;
-		return 1;
+	Screen screen;
+	if (screen.init() == false)
+	{
+		cout << "Error initializing SDL." << endl;
 	}
 
-	SDL_Window* window = SDL_CreateWindow("Particle Fire Explosion", 
-		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, 
-		SDL_WINDOW_SHOWN);
-
-	if (window == NULL) {
-		SDL_Quit();
-		return 2;
-	}
-
-	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
-	SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, 
-		SDL_TEXTUREACCESS_STATIC, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-	if (renderer == NULL) {
-		cout << "Could not create renderer" << endl;
-		SDL_DestroyWindow(window);
-		SDL_Quit();
-		return 3;
-	}
-
-	if (texture == NULL) {
-		cout << "Could not create texture" << endl;
-		SDL_DestroyRenderer(renderer);
-		SDL_DestroyWindow(window);
-		SDL_Quit();
-		return 4;
-	}
-
-	Uint32* buffer = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT];
-	memset(buffer, 0xFF, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
-
-	SDL_UpdateTexture(texture, NULL, buffer, SCREEN_WIDTH * sizeof(Uint32));
-	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
-	SDL_RenderPresent(renderer);
-
-	bool quit = false;
-	SDL_Event event;
-	while (!quit) 
+	while (true) 
 	{
 		//Update particles
 		//Draw particles
 		//Check for messages/events
+		int elapsed = SDL_GetTicks();
+		unsigned char red = (1 + sin(elapsed * 0.001)) * 128;
+		unsigned char green = (1 + cos(elapsed * 0.001))*128;
+		unsigned char blue = (1 + sin(elapsed * 0.001)) * 128;
 
-		while (SDL_PollEvent(&event)) 
-		{
-			if (event.type == SDL_QUIT) {
-				quit = true;
+		for (int y = 0; y < Screen::SCREEN_HEIGHT; y++) {
+			for (int x = 0; x < Screen::SCREEN_WIDTH; x++) {
+				screen.setPixel(x, y, red, green, blue);
 			}
+		}
+
+		// Draw the screen
+		screen.update();
+
+		if (screen.processEvents() == false) {
+			break;
 		}
 	}
 	
-	delete[] buffer;
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+	screen.close();
 
 	return 0;
 }
