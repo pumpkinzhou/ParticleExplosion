@@ -1,6 +1,6 @@
 #include "Swarm.h"
 
-namespace particleMotion {
+namespace particleExplosion {
 	Swarm::Swarm():lastTime(0)
 	{
 		m_pParticles = new Particle[NPARTICLES];

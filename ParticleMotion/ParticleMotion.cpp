@@ -7,7 +7,7 @@
 #include "Swarm.h"
 
 using namespace std;
-using namespace particleMotion;
+using namespace particleExplosion;
 
 
 int main(int argc, char* argv[])

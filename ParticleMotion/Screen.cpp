@@ -1,6 +1,6 @@
 #include "Screen.h"
 
-namespace particleMotion {
+namespace particleExplosion {
 Screen::Screen(): m_window(NULL), m_renderer(NULL),	m_texture(NULL),m_buffer1(NULL), m_buffer2(NULL){}
 
 bool Screen::init()
@@ -98,7 +98,7 @@ void Screen::clear()
 
 void Screen::boxBlur()
 {
-	// Swap the buffers, so pixel is in m_buffer2 and draw to m_buffer1
+	// Swap the buffers, so original pixel is in m_buffer2 and we are drawing to m_buffer1
 	Uint32* temp = m_buffer1;
 	m_buffer1 = m_buffer2;
 	m_buffer2 = temp;

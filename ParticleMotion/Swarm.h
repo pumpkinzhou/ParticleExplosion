@@ -4,7 +4,7 @@
 
 #include "Particle.h"
 
-namespace particleMotion {
+namespace particleExplosion {
 
 class Swarm
 {

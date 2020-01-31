@@ -4,7 +4,7 @@
 #include <SDL.h>
 #include <iostream>
 
-namespace particleMotion {
+namespace particleExplosion {
 
 	class Screen
 	{

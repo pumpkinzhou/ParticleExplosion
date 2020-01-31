@@ -2,7 +2,7 @@
 #ifndef PARTICLE_H_
 #define PARTICLE_H_
 
-namespace particleMotion {
+namespace particleExplosion {
 
 struct Particle
 {
@@ -14,10 +14,11 @@ struct Particle
 
 	Particle();
 	virtual ~Particle();
+	void init();
 	void update(int interval);
 };
 
-}
+} /* end namespace */
 
 #endif  /* PARTICLE_H_ */
 
