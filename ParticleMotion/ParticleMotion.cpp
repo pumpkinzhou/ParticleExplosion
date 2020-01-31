@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 		int elapsed = SDL_GetTicks();
 
 		//Update particles
-		screen.clear();
+		//screen.clear();
 		swarm.update(elapsed);
 
 
@@ -42,6 +42,8 @@ int main(int argc, char* argv[])
 			int y = particle.m_y * Screen::SCREEN_WIDTH /2 + Screen::SCREEN_HEIGHT / 2;
 			screen.setPixel(x, y, red, green, blue);
 		}
+
+		screen.boxBlur();
 
 		//Draw particles
 		screen.update();
